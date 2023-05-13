@@ -58,14 +58,22 @@ const serveHandle = (req, res) => {
   //添加请求参数
   getPostdata(req).then((postData) => {
     req.body = postData
-    //获取登陆接口数据
-    const blogData = handBlogReact(req, res)
-    if (blogData) {
-      res.end(JSON.stringify(blogData))
+    //处理blog路由
+    // const blogData = handBlogReact(req, res)
+    // if (blogData) {
+    //   res.end(JSON.stringify(blogData))
+    //   return
+    // }
+
+    const blogResult = handBlogReact(req, res)
+    if (blogResult) {
+      blogResult.then((blogData) => {
+        res.end(JSON.stringify(blogData))
+      })
       return
     }
 
-    //获取博客数据
+    //处理user路由
     const userData = handleUserRouter(req, res)
 
     if (userData) {

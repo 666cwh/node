@@ -23,22 +23,35 @@ const handBlogReact = (req, res) => {
     const author = req.query.author || ''
     const keyword = req.query.keyword || ''
     //获取数据
-    const listData = getList(author, keyword)
-
-    return new SuccessModel(listData)
+    // const listData = getList(author, keyword)
+    // return new SuccessModel(listData)
+    const result = getList(author, keyword)
+    console.log(result)
+    return result.then((listData) => {
+      return new SuccessModel(listData)
+    })
   }
 
   //   博客详情接口
   if (method === 'GET' && path === '/api/blog/detail') {
-    const data = getDetail(id)
-    //获取数据
-    return new SuccessModel(data)
+    //  const data = getDetail(id)
+    // //获取数据
+    // return new SuccessModel(data)
+    const result = getDetail(id)
+    return result.then((data) => {
+      return new SuccessModel(data)
+    })
   }
 
   //   新建博客接口
   if (method === 'POST' && path === '/api/blog/new') {
-    const data = newBlog(req.body)
-    return new SuccessModel(data)
+    // const data = newBlog(req.body)
+    // return new SuccessModel(data)
+    req.body.author = 'zhangsan'
+    const result = newBlog(req.body)
+    return result.then((data) => {
+      return new SuccessModel(data)
+    })
   }
 
   //   更新博客接口
